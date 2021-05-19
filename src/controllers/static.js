@@ -9,6 +9,9 @@ function staticHandler(req, res) {
         }
         res.writeHead(404)
     })
+    res.writeHead(200, {
+        "Content-Type": "text/css"
+    })
     css.pipe(res)
 }
 module.exports = staticHandler
