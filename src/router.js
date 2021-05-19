@@ -16,7 +16,6 @@ module.exports = function(req, res) {
     if(req.method === "POST") {
         console.log("da");
     }else {
-        console.log(req.url);
         const handler = requestMap[req.url]
         if(typeof handler === "function") {
             handler(req, res)
