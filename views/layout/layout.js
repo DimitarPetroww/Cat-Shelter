@@ -20,10 +20,6 @@ module.exports = (body) => `
             </ul>
         </nav>
         <h1>Cat Shelter</h1>
-        <form action="/search">
-            <input type="text">
-            <button type="button">Search</button>
-        </form>
     </header>
     ${body}
 </body>

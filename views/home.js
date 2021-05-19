@@ -1,4 +1,8 @@
 module.exports = () => `
+<form action="/search">
+    <input type="text">
+    <button type="button">Search</button>
+</form>
 <main>
     <section class="cats">
         <ul>
