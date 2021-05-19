@@ -4,6 +4,7 @@ const cats = require("../../util/cats.json")
 const breeds = require("../../util/breeds.json")
 const config = require("../../util/config.json")
 
+const formidable = require("formidable")
 const fs = require("fs")
 
 function getCat(req, res) {
@@ -18,18 +19,28 @@ function getCat(req, res) {
     res.end()
 }
 function editCat(req, res) {
+    const form = new formidable.IncomingForm()
     const url = req.url
     const id = url.slice(url.lastIndexOf("/") + 1)
-    delete cats[id]
-    fs.writeFile(config.catDBPath, JSON.stringify(cats), (err) => {
-        if (err) {
-            return console.log(err.message);
-        }
+
+    form.parse(req, (err, fields, files) => {
+        fs.rename(files.upload.path, `./images/${files.upload.name}`, function (err) {
+            if (err) {
+                return console.log(err.message);
+            }
+        });
+        Object.assign(fields, { imgURL: `${files.upload.name}` })
+        cats[id] = fields
+        fs.writeFile(config.catDBPath, JSON.stringify(cats), (err) => {
+            if (err) {
+                return console.log(err.message);
+            }
+        })
+        res.writeHead(302, {
+            "Location": "/"
+        })
+        res.end()
     })
-    res.writeHead(302, {
-        "Location": "/"
-    })
-    res.end()
 }
 module.exports = {
     GET: getCat,
