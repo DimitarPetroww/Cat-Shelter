@@ -1,5 +1,6 @@
 {
     "cssPath": "./content/styles/site.css",
     "favIconPath": "./content/images/pawprint.ico",
-    "breedDBPath": "./util/breeds.json" 
+    "breedDBPath": "./util/breeds.json",
+    "catDBPath": "./util/cats.json"
 }

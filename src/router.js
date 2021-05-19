@@ -2,6 +2,7 @@ const homeHandler = require("./controllers/home");
 const addBreedHandler = require("./controllers/addBreed");
 const addCatHandler = require("./controllers/addCat")
 const postBreed = require("./controllers/postBreed")
+const postCat = require("./controllers/postCat")
 const staticHandler = require("./controllers/static");
 const favIconHandler = require("./controllers/fav-icon")
 
@@ -13,7 +14,8 @@ const GETRequestMap = {
     "/content/images/pawprint.ico": favIconHandler
 }
 const POSTRequestMap = {
-    "/add-breed": postBreed
+    "/add-breed": postBreed,
+    "/add-cat": postCat
 }
 
 module.exports = function (req, res) {

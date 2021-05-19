@@ -1,5 +1,5 @@
 module.exports = (breeds) => `
-<form action="" method="" class="cat-form" enctype="multipart/form-data">
+<form action="/add-cat" method="POST" class="cat-form" enctype="multipart/form-data">
     <h2>Add Cat</h2>
     <label for="name">Name</label>
     <input name="name" type="text" id="name">
@@ -9,7 +9,7 @@ module.exports = (breeds) => `
     <input name="upload" type="file" id="image">
     <label for="group">Breed</label>
     <select name="breed" id="group">
-        ${breeds.map(x => `<option value="${x}">${x}</option>`)}
+        ${breeds.map(x => `<option value="${x}">${x}</option>`).join("")}
     </select>
     <button type="submit">Add Cat</button>
 </form>`
