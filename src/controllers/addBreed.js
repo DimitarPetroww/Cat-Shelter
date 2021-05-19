@@ -1,9 +1,10 @@
 const layout = require("../../views/layout/layout")
 const breed = require("../../views/addBreed")
-
-const fs = require("fs")
 const config = require("../../util/config.json")
 const breeds = require("../../util/breeds.json")
+
+const fs = require("fs")
+const generateError = require("../../util/generateError")
 
 function addbreedHandler(req, res) {
     res.writeHead(200, {
@@ -19,7 +20,7 @@ function postBreedHandler(req, res) {
         breeds.push(body.split("=")[1])
         fs.writeFile(config.breedDBPath, JSON.stringify(breeds), (err) => {
             if(err) {
-                return console.log(err.message);
+                return generateError(res, err.message)
             }
             res.writeHead(302, {
                 "Location": "/"

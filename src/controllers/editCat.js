@@ -6,6 +6,7 @@ const config = require("../../util/config.json")
 
 const formidable = require("formidable")
 const fs = require("fs")
+const generateError = require("../../util/generateError")
 
 function getCat(req, res) {
     const url = req.url
@@ -24,16 +25,19 @@ function editCat(req, res) {
     const id = url.slice(url.lastIndexOf("/") + 1)
 
     form.parse(req, (err, fields, files) => {
-        fs.rename(files.upload.path, `./images/${files.upload.name}`, function (err) {
-            if (err) {
-                return console.log(err.message);
+        if(err) {
+            return generateError(res, e.message)
+        }
+        fs.rename(files.upload.path, `./images/${files.upload.name}`, function (e) {
+            if (e) {
+                return generateError(res, e.message)
             }
         });
         Object.assign(fields, { imgURL: `${files.upload.name}` })
         cats[id] = fields
-        fs.writeFile(config.catDBPath, JSON.stringify(cats), (err) => {
-            if (err) {
-                return console.log(err.message);
+        fs.writeFile(config.catDBPath, JSON.stringify(cats), (error) => {
+            if (error) {
+                return generateError(res, error.message)
             }
         })
         res.writeHead(302, {

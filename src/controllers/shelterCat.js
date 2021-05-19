@@ -3,6 +3,7 @@ const details = require("../../views/catDetails")
 const cats = require("../../util/cats.json")
 const config = require("../../util/config.json")
 const fs = require("fs")
+const generateError = require("../../util/generateError")
 
 function getCat(req, res) {
     const url = req.url
@@ -21,7 +22,7 @@ function deleteCat(req, res) {
     delete cats[id]
     fs.writeFile(config.catDBPath, JSON.stringify(cats), (err) => {
         if(err) {
-            return console.log(err.message);
+            return generateError(res, err.message)
         }
     })
     res.writeHead(302, {

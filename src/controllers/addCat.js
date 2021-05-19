@@ -7,6 +7,7 @@ const config = require("../../util/config.json")
 const fs = require("fs")
 const formidable = require("formidable")
 const { v4: uuid } = require("uuid")
+const generateError = require("../../util/generateError")
 
 function addCatHandler(req, res) {
     res.writeHead(200, {
@@ -21,18 +22,19 @@ function postCatHandler(req, res) {
     form.parse(req, (err, fields, files) => {
         if (err || (!(files && files.upload && files.upload.name && files.upload.name.match('.(jpg|jpeg|png|gif)$')) ||
             !(fields && fields.name && fields.description && fields.breed))) {
-            return console.log(err.message);
+            return generateError(res, err.message)
         }
-        fs.rename(files.upload.path, `./images/${files.upload.name}`, function (err) {
-            if (err) {
-                return console.log(err.message);
+        fs.rename(files.upload.path, `./images/${files.upload.name}`, function (e) {
+            if (e) {
+                return generateError(res, e.message)
             }
         });
         Object.assign(fields, {imgURL: `${files.upload.name}`})
         cats[uuid()] = fields
-        fs.writeFile(config.catDBPath, JSON.stringify(cats), (err) => {
-            if(err) {
-                return console.log(err.message);
+
+        fs.writeFile(config.catDBPath, JSON.stringify(cats), (error) => {
+            if(error) {
+                return generateError(res, error.message)
             }
         })
         res.writeHead(302, {
