@@ -1,6 +1,6 @@
 const fs = require("fs")
 const path = require("path")
-const config = require("../../config.json")
+const config = require("../../util/config.json")
 
 function staticHandler(req, res) {
     const css = fs.createReadStream(path.join(config.cssPath), (err) => {
