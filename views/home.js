@@ -1,12 +1,12 @@
 module.exports = (cats) => `
-<form action="/search">
-    <input type="text">
-    <button type="button">Search</button>
+<form method="GET">
+    <input type="text" name="breed">
+    <button type="submit">Search</button>
 </form>
 <main>
     <section class="cats">
         <ul>
-            ${Object.entries(cats).map(([id, x])=> `<li>
+            ${cats.map(([id, x])=> `<li>
             <img src="/images/${x.imgURL}" alt="Black Cat">
             <h3>${x.name}</h3>
             <p><span>Breed: </span>${x.breed}</p>

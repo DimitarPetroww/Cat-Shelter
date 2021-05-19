@@ -1,4 +1,4 @@
-const homeHandler = require("./controllers/home");
+const {homeHandler, searchHandler} = require("./controllers/home");
 const addBreedHandler = require("./controllers/addBreed");
 const addCatHandler = require("./controllers/addCat")
 const shelterHandler = require("./controllers/shelterCat")
@@ -7,6 +7,8 @@ const editHandler = require("./controllers/editCat")
 const staticHandler = require("./controllers/static/static");
 const favIconHandler = require("./controllers/static/fav-icon");
 const imageHandler = require("./controllers/static/image");
+
+const qs = require("querystring")
 
 const GETRequestMap = {
     "/": homeHandler,
@@ -24,11 +26,20 @@ module.exports = function (req, res) {
     const handler = req.method === "GET" ? GETRequestMap[req.url] : POSTRequestMap[req.url]
     if (typeof handler === "function") {
         handler(req, res)
-    }else if(req.url.match(/^\/details\/.+$/g)) {
-        req.method === "GET" ? shelterHandler.GET(req, res) : shelterHandler.POST(req, res)
-    }else if(req.url.match(/^\/edit\/.+$/g)) {
-        req.method === "GET" ? editHandler.GET(req, res) : editHandler.POST(req, res)
-    }else if(req.url.includes("images")) {
-        imageHandler(req, res)
+    }
+
+    switch(true) {
+        case /^\/details\/.+$/g.test(req.url):
+            req.method === "GET" ? shelterHandler.GET(req, res) : shelterHandler.POST(req, res)
+        break;
+        case /^\/edit\/.+$/g.test(req.url): 
+            req.method === "GET" ? editHandler.GET(req, res) : editHandler.POST(req, res)
+        break;
+        case /\/images\/.+$/g.test(req.url): 
+            imageHandler(req, res)
+        break;
+        case /^\/\?breed=.+$/g.test(req.url):
+            searchHandler(req, res)
+        break;
     }
 }
