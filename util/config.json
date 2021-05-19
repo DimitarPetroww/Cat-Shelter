@@ -1,4 +1,5 @@
 {
     "cssPath": "./content/styles/site.css",
-    "favIconPath": "./content/images/pawprint.ico"
+    "favIconPath": "./content/images/pawprint.ico",
+    "breedDBPath": "./util/breeds.json" 
 }
