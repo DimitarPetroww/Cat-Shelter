@@ -1,3 +1,4 @@
 {
-    "cssPath": "./content/styles/site.css"
+    "cssPath": "./content/styles/site.css",
+    "favIconPath": "./content/images/pawprint.ico"
 }
