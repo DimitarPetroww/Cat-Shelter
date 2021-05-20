@@ -8,6 +8,7 @@ function staticHandler(req, res) {
             return console.log(err.message);
         }
         res.writeHead(404)
+        res.end()
     })
     res.writeHead(200, {
         "Content-Type": "image/vnd.microsoft.icon"
