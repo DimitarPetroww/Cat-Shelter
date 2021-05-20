@@ -3,7 +3,7 @@ const path = require("path")
 const config = require("../../../util/config.json")
 
 function staticHandler(req, res) {
-    const ico = fs.createReadStream(path.join(config.favIconPath), (err) => {
+    const ico = fs.createReadStream(config.favIconPath, (err) => {
         if(err) {
             return console.log(err.message);
         }

@@ -3,7 +3,7 @@ const path = require("path")
 const config = require("../../../util/config.json")
 
 function staticHandler(req, res) {
-    const css = fs.createReadStream(path.join(config.cssPath), (err) => {
+    const css = fs.createReadStream(config.cssPath, (err) => {
         if(err) {
             return console.log(err.message);
         }
